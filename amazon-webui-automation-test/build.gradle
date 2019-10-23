@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+group 'com.igor'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'org.testng', name: 'testng', version: '5.7'
+}
