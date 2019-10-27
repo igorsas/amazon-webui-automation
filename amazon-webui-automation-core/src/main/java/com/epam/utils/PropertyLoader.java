@@ -7,9 +7,11 @@ import java.util.Properties;
 
 public class PropertyLoader {
     public static String getValue(final String keyToFile) {
+        String resourceName = "driver.properties";
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties properties = new Properties();
-        try (InputStream input = PropertyLoader.class.getClassLoader().getResourceAsStream("driver.properties")) {
-            properties.load(Objects.requireNonNull(input));
+        try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
+            properties.load(Objects.requireNonNull(resourceStream));
             return properties.getProperty(keyToFile);
         } catch (IOException e) {
             e.printStackTrace();
