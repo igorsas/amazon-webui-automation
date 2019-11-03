@@ -2,24 +2,24 @@ package com.epam.po;
 
 import com.epam.annotation.InitializeByXpath;
 import com.epam.driver.DriverManager;
-import com.epam.utils.PropertyLoader;
+import com.epam.element.Button;
+import com.epam.element.TextArea;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static org.openqa.selenium.support.PageFactory.initElements;
+import static com.epam.factory.PageFactory.initElements;
 
 
 public class LoginPO {
     private WebDriver webDriver;
 
     @InitializeByXpath(xpath = "//*[@id='ap_email']")
-    private WebElement email;
+    private TextArea email;
     @InitializeByXpath(xpath = "//*[@id='continue']")
-    private WebElement submit;
+    private Button submit;
 
     public LoginPO(){
         webDriver = DriverManager.getDriver();
-        webDriver.get(PropertyLoader.getValue("initial_url"));
         initElements(webDriver, this);
     }
 
@@ -29,7 +29,7 @@ public class LoginPO {
     }
 
     public LoginPO submit(){
-        this.submit.submit();
+        this.submit.click();
         return this;
     }
 }

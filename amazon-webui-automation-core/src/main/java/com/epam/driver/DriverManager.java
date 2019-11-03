@@ -29,11 +29,11 @@ public class DriverManager {
     }
 
     private static void initializeDriver(){
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(HEADLESS_MODE);
+//        ChromeOptions options = new ChromeOptions();
+//        options.setHeadless(HEADLESS_MODE);
 //        uncomment when need addblock
 //        options.addExtensions(new File("src/main/resources/adBlockExtension.crx"));
-        ChromeDriver driver = new ChromeDriver(options);
+        ChromeDriver driver = new ChromeDriver();
         DRIVER_POOL.set(driver);
         DRIVER_POOL.get().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         DRIVER_POOL.get().manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
