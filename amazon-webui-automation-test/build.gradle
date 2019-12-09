@@ -11,6 +11,8 @@ repositories {
 }
 
 dependencies {
+    compile project(':amazon-webui-automation-core')
+    compile project(':amazon-webui-automation-po')
     testCompile 'org.testng:testng:7.0.0-beta3'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.8.1'
     // https://mvnrepository.com/artifact/joda-time/joda-time

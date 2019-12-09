@@ -27,7 +27,7 @@ public class CustomElementLocator {
         if (Objects.isNull(annotation)) {
             return null;
         }
-        String xpath = annotation.xpath();
+        String xpath = annotation.locator();
         By ans = By.xpath(xpath);
 
         return ans;

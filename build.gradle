@@ -30,3 +30,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 */
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}

@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface InitializeByXpath {
-    String xpath() default "";
+    String locator() default "";
 }

@@ -1,2 +1,4 @@
 rootProject.name = 'amazon-webui-automation-test'
 
+include ":amazon-webui-automation-core",
+        ":amazon-webui-automation-po"

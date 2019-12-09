@@ -7,10 +7,13 @@ version 'unspecified'
 sourceCompatibility = 1.8
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 
+
 dependencies {
+    compile project(":amazon-webui-automation-core")
     testCompile 'org.testng:testng:7.0.0-beta3'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.8.1'
 }

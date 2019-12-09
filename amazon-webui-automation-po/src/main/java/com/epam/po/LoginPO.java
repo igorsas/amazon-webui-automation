@@ -5,7 +5,6 @@ import com.epam.driver.DriverManager;
 import com.epam.element.Button;
 import com.epam.element.TextArea;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import static com.epam.factory.PageFactory.initElements;
 
@@ -13,9 +12,9 @@ import static com.epam.factory.PageFactory.initElements;
 public class LoginPO {
     private WebDriver webDriver;
 
-    @InitializeByXpath(xpath = "//*[@id='ap_email']")
+    @InitializeByXpath(locator = "//*[@id='ap_email']")
     private TextArea email;
-    @InitializeByXpath(xpath = "//*[@id='continue']")
+    @InitializeByXpath(locator = "//*[@id='continue']")
     private Button submit;
 
     public LoginPO(){

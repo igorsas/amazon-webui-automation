@@ -17,7 +17,7 @@ include 'services:webservice'
 */
 
 rootProject.name = 'amazon-webui-automation'
-include 'amazon-webui-automation-core'
-include 'amazon-webui-automation-po'
-include 'amazon-webui-automation-test'
+include "amazon-webui-automation-core",
+        "amazon-webui-automation-po",
+        "amazon-webui-automation-test"
 
