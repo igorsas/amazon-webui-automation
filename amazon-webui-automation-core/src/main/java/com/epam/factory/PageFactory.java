@@ -1,6 +1,7 @@
 package com.epam.factory;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.pagefactory.FieldDecorator;
 
 import java.lang.reflect.Field;
 
