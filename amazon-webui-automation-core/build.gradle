@@ -12,8 +12,11 @@ repositories {
 }
 
 dependencies {
-    testCompile 'org.testng:testng:7.0.0-beta3'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.8.1'
+    compile 'org.testng:testng:7.0.0-beta3'
+    compile group: 'javax.mail', name: 'mail', version: '1.4.1'
+    compile group: 'javax.mail', name: 'javax.mail-api', version: '1.6.0'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 }
 
 test {

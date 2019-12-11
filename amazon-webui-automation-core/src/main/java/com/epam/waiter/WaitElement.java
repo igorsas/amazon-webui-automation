@@ -2,6 +2,7 @@ package com.epam.waiter;
 
 import com.epam.driver.DriverManager;
 import com.epam.element.AbstractElement;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -9,11 +10,21 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Objects;
+
 public class WaitElement {
     private static final int DEFAULT_TIME_OUT = 10;
     private static WebDriverWait webDriverWait;
 
-    public static void waitFor(final ExpectedCondition<WebElement> condition, int timeOutInSeconds) {
+    public static void waitFor(final ExpectedCondition<?> condition) {
+        webDriverWait = new WebDriverWait(DriverManager.getDriver(), DEFAULT_TIME_OUT);
+        try {
+            webDriverWait.until(condition);
+        } catch (WebDriverException ignored) {
+        }
+    }
+
+    public static void waitFor(final ExpectedCondition<?> condition, int timeOutInSeconds) {
         webDriverWait = new WebDriverWait(DriverManager.getDriver(), timeOutInSeconds);
         try {
             webDriverWait.until(condition);
@@ -31,5 +42,9 @@ public class WaitElement {
                 return null;
             }
         };
+    }
+
+    public static ExpectedCondition<Boolean> getPageLoadedCondition() {
+        return webDriver -> ((JavascriptExecutor) Objects.requireNonNull(webDriver)).executeScript("return document.readyState").equals("complete");
     }
 }

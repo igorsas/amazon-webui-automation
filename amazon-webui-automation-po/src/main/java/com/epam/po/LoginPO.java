@@ -2,17 +2,9 @@ package com.epam.po;
 
 import com.epam.annotation.InitializeByXpath;
 import com.epam.element.Button;
+import com.epam.element.CheckBox;
 import com.epam.element.TextBox;
-import com.epam.waiter.WaitElement;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import javax.annotation.Nullable;
-
-import static com.epam.factory.PageFactory.initElements;
 import static com.epam.waiter.WaitElement.getClickableCondition;
 import static com.epam.waiter.WaitElement.waitFor;
 
@@ -27,6 +19,12 @@ public class LoginPO extends AbstractPO{
     private TextBox password;
     @InitializeByXpath(locator = "//*[@id='signInSubmit']")
     private Button signIn;
+    @InitializeByXpath(locator = "//*[@name='code']")
+    private TextBox otp;
+    @InitializeByXpath(locator = "//*[@id='a-autoid-0']//input[@type='submit']")
+    private Button submitOtp;
+    @InitializeByXpath(locator = "//*[@name='rememberMe']")
+    private CheckBox keepMeSignedIn;
 
     public LoginPO setEmail(String email){
         this.email.sendKeys(email);
@@ -38,15 +36,32 @@ public class LoginPO extends AbstractPO{
         return this;
     }
 
-    public LoginPO goToPassword(){
-        waitFor(getClickableCondition(continuE), 20);
+    public LoginPO setOtp(String otp){
+        this.otp.sendKeys(otp);
+        return this;
+    }
+
+    public LoginPO continuE(){
+        waitFor(getClickableCondition(continuE));
         this.continuE.click();
         return this;
     }
 
+    public LoginPO selectKeepMeSignIn(){
+        waitFor(getClickableCondition(keepMeSignedIn));
+        this.keepMeSignedIn.selectCheckBox();
+        return this;
+    }
+
     public LoginPO signIn(){
-        waitFor(getClickableCondition(signIn), 20);
+        waitFor(getClickableCondition(signIn));
         this.signIn.click();
+        return this;
+    }
+
+    public LoginPO submitOtp(){
+        waitFor(getClickableCondition(submitOtp));
+        this.submitOtp.click();
         return this;
     }
 }

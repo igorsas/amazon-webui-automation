@@ -7,10 +7,6 @@ public class Button extends Element {
         super(webElement);
     }
 
-    public boolean isClickable() {
-        return webElement.isDisplayed() && webElement.isEnabled();
-    }
-
     public void click() {
         webElement.click();
     }
