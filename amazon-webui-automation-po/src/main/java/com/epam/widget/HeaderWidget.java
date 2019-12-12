@@ -4,6 +4,7 @@ import com.epam.AbstractPO;
 import com.epam.annotation.InitializeByXpath;
 import com.epam.element.Button;
 import com.epam.po.CartPO;
+import com.epam.po.SpecialOffersPO;
 
 import static com.epam.waiter.WaitElement.getClickableCondition;
 import static com.epam.waiter.WaitElement.waitFor;
@@ -13,13 +14,13 @@ public class HeaderWidget extends AbstractPO {
     @InitializeByXpath(locator = "//*[@id='nav-global-location-slot']//a")
     private Button deliverTo;
 
-    @InitializeByXpath(locator = "//*[@id='nav-xshop']/contains(@href,'international-sales-offers')]")
+    @InitializeByXpath(locator = "//*[@id='nav-xshop']//a[contains(@href,'international-sales-offers')]")
     private Button todaysDeals;
 
-    @InitializeByXpath(locator = "//*[@id='nav-xshop']/a[contains(@href,'help')]")
+    @InitializeByXpath(locator = "//*[@id='nav-xshop']//a[contains(@href,'help')]")
     private Button help;
 
-    @InitializeByXpath(locator = "//*[@id='nav-xshop']/a[contains(@href,'buyagain')]")
+    @InitializeByXpath(locator = "//*[@id='nav-xshop']//a[contains(@href,'buyagain')]")
     private Button buyAgain;
 
     @InitializeByXpath(locator = "//*[@id='nav-orders']")
@@ -34,10 +35,10 @@ public class HeaderWidget extends AbstractPO {
         return this;
     }
 
-    public HeaderWidget clickTodaysDeals() {
+    public SpecialOffersPO clickTodaysDeals() {
         waitFor(getClickableCondition(todaysDeals));
         this.todaysDeals.click();
-        return this;
+        return new SpecialOffersPO();
     }
 
     public HeaderWidget clickHelp() {
