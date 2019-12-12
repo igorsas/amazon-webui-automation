@@ -1,17 +1,16 @@
 package com.epam.driver;
 
 import com.epam.utils.PropertyLoader;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.epam.constant.GeneralConstants.DRIVER_PROPERTIES_NAME;
+import static com.epam.constant.GeneralConstants.WAIT_TIMERS_PROPERTIES_NAME;
 
 public class DriverManager {
     private static final String NAME = Objects.requireNonNull(PropertyLoader.getValue(DRIVER_PROPERTIES_NAME, "name"));
@@ -40,10 +39,15 @@ public class DriverManager {
 //        uncomment when need addblock
 //        options.addExtensions(new File("src/main/resources/adBlockExtension.crx"));
         ChromeDriver driver = new ChromeDriver(options);
+
+        long implicitlyWait = Long.parseLong(Objects.requireNonNull(PropertyLoader.getValue(WAIT_TIMERS_PROPERTIES_NAME, "implicitlyWait")));
+        long pageLoadTimeout = Long.parseLong(Objects.requireNonNull(PropertyLoader.getValue(WAIT_TIMERS_PROPERTIES_NAME, "pageLoadTimeout")));
+        long scriptTimeout = Long.parseLong(Objects.requireNonNull(PropertyLoader.getValue(WAIT_TIMERS_PROPERTIES_NAME, "scriptTimeout")));
+
         DRIVER_POOL.set(driver);
-        DRIVER_POOL.get().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        DRIVER_POOL.get().manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-        DRIVER_POOL.get().manage().timeouts().setScriptTimeout(50, TimeUnit.SECONDS);
+        DRIVER_POOL.get().manage().timeouts().implicitlyWait(implicitlyWait, TimeUnit.SECONDS);
+        DRIVER_POOL.get().manage().timeouts().pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS);
+        DRIVER_POOL.get().manage().timeouts().setScriptTimeout(scriptTimeout, TimeUnit.SECONDS);
         DRIVER_POOL.get().manage().window().maximize();
     }
 
@@ -52,12 +56,13 @@ public class DriverManager {
         DRIVER_POOL.set(null);
     }
 
-    public static void clearCache() {
+    public static void clear() {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) DRIVER_POOL.get();
+        Long hostnameLength = (Long) jsExecutor.executeScript("return window.location.hostname.length;");
+        if (hostnameLength > 0) {
+            jsExecutor.executeScript("window.sessionStorage.clear();");
+            jsExecutor.executeScript("window.localStorage.clear();");
+        }
         DRIVER_POOL.get().manage().deleteAllCookies();
-        //doesn't work
-        DRIVER_POOL.get().close();
-        DRIVER_POOL.get().findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL +"t");
-        ArrayList<String> tabs = new ArrayList<String> (DRIVER_POOL.get().getWindowHandles());
-        DRIVER_POOL.get().switchTo().window(tabs.get(1));
     }
 }

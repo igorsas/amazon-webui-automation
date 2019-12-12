@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.Objects;
 
 public class WaitElement {
-    private static final int DEFAULT_TIME_OUT = 10;
+    private static final int DEFAULT_TIME_OUT = 30;
     private static WebDriverWait webDriverWait;
 
     public static void waitFor(final ExpectedCondition<?> condition) {
@@ -42,6 +42,10 @@ public class WaitElement {
                 return null;
             }
         };
+    }
+
+    public static ExpectedCondition<WebElement> getVisibitityCondition(AbstractElement element) {
+        return driver -> ExpectedConditions.visibilityOf(element.getWebElement()).apply(driver);
     }
 
     public static ExpectedCondition<Boolean> getPageLoadedCondition() {
