@@ -1,11 +1,14 @@
 package com.epam;
 
 import com.epam.driver.DriverManager;
+import com.epam.po.CartPO;
+import com.epam.po.GoodPO;
 import com.epam.widget.HeaderWidget;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static com.epam.assertion.CartAssertion.assertCartIsEmpty;
+import static org.testng.Assert.assertTrue;
 
 public class OpenPageTest extends AbstractTest {
     @BeforeMethod
@@ -23,8 +26,10 @@ public class OpenPageTest extends AbstractTest {
     @Test
     public static void addGoodToCartTest() {
         HeaderWidget headerWidget = new HeaderWidget();
-        headerWidget.clickTodaysDeals().openFirstGood();
-//        headerWidget.clickCart()
-
+        GoodPO goodPO = headerWidget.clickTodaysDeals().openFirstGood();
+        String expectedGoodTitle = goodPO.getProductTitle();
+        goodPO.addToCart();
+        CartPO cartPO = headerWidget.clickCart();
+        assertTrue(cartPO.hasGood(expectedGoodTitle), "Good: " + expectedGoodTitle + " is not added to cart");
     }
 }
