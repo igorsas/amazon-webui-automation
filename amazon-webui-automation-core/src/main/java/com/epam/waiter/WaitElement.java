@@ -44,7 +44,7 @@ public class WaitElement {
         };
     }
 
-    public static ExpectedCondition<WebElement> getVisibitityCondition(AbstractElement element) {
+    public static ExpectedCondition<WebElement> getVisibilityCondition(AbstractElement element) {
         return driver -> ExpectedConditions.visibilityOf(element.getWebElement()).apply(driver);
     }
 

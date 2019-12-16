@@ -70,7 +70,7 @@ public class LoginPO extends AbstractPO {
 
     public boolean isOtpIncorrect() {
         try {
-            waitFor(getVisibitityCondition(incorrectOtp), 5);
+            waitFor(getVisibilityCondition(incorrectOtp), 5);
             return true;
         } catch (Exception ignored) {
             return false;
