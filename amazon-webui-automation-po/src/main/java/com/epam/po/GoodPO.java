@@ -1,5 +1,6 @@
 package com.epam.po;
 
+import com.epam.AbstractPO;
 import com.epam.annotation.InitializeByXpath;
 import com.epam.element.Button;
 import com.epam.element.Label;
@@ -7,7 +8,7 @@ import com.epam.element.Label;
 import static com.epam.waiter.WaitElement.getClickableCondition;
 import static com.epam.waiter.WaitElement.waitFor;
 
-public class GoodPO {
+public class GoodPO extends AbstractPO {
     @InitializeByXpath(locator = "//*[@id='add-to-cart-button']")
     private Button addToCart;
 
@@ -24,7 +25,7 @@ public class GoodPO {
     }
 
     public String getProductTitle(){
-        return productTitle.getText();
+        return this.productTitle.getText();
     }
 
     public GoodPO buyNow(){
