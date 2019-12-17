@@ -32,4 +32,9 @@ public class OpenPageTest extends AbstractTest {
         CartPO cartPO = headerWidget.clickCart();
         assertTrue(cartPO.hasGood(expectedGoodTitle), "Good: " + expectedGoodTitle + " is not added to cart");
     }
+
+    @Test
+    public static void openCellPhonesPage(){
+
+    }
 }
