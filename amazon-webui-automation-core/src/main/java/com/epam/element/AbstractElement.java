@@ -1,5 +1,6 @@
 package com.epam.element;
 
+import com.epam.waiter.WaitElement;
 import org.openqa.selenium.WebElement;
 
 public abstract class AbstractElement {
@@ -11,5 +12,9 @@ public abstract class AbstractElement {
 
     public WebElement getWebElement() {
         return webElement;
+    }
+
+    public WaitElement waitFor(){
+        return new WaitElement(webElement);
     }
 }

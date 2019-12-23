@@ -5,9 +5,6 @@ import com.epam.annotation.InitializeByXpath;
 import com.epam.element.Button;
 import com.epam.element.Label;
 
-import static com.epam.waiter.WaitElement.getClickableCondition;
-import static com.epam.waiter.WaitElement.waitFor;
-
 public class GoodPO extends AbstractPO {
     @InitializeByXpath(locator = "//*[@id='add-to-cart-button']")
     private Button addToCart;
@@ -18,18 +15,18 @@ public class GoodPO extends AbstractPO {
     @InitializeByXpath(locator = "//*[@id='productTitle']")
     private Label productTitle;
 
-    public GoodPO addToCart(){
-        waitFor(getClickableCondition(addToCart));
+    public GoodPO addToCart() {
+        this.addToCart.waitFor().clickable();
         this.addToCart.click();
         return this;
     }
 
-    public String getProductTitle(){
+    public String getProductTitle() {
         return this.productTitle.getText();
     }
 
-    public GoodPO buyNow(){
-        waitFor(getClickableCondition(buyNow));
+    public GoodPO buyNow() {
+        this.buyNow.waitFor().clickable();
         this.buyNow.click();
         return this;
     }

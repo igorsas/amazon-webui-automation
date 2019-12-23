@@ -7,8 +7,6 @@ import com.epam.element.CheckBox;
 import com.epam.element.Label;
 import com.epam.element.TextBox;
 
-import static com.epam.waiter.WaitElement.*;
-
 
 public class LoginPO extends AbstractPO {
 
@@ -45,35 +43,30 @@ public class LoginPO extends AbstractPO {
     }
 
     public LoginPO clickContinue() {
-        waitFor(getClickableCondition(continuE));
+        this.continuE.waitFor().clickable();
         this.continuE.click();
         return this;
     }
 
     public LoginPO clickSelectKeepMeSignIn() {
-        waitFor(getClickableCondition(keepMeSignedIn));
+        this.keepMeSignedIn.waitFor().clickable();
         this.keepMeSignedIn.selectCheckBox();
         return this;
     }
 
     public LoginPO clickSignIn() {
-        waitFor(getClickableCondition(signIn));
+        this.signIn.waitFor().clickable();
         this.signIn.click();
         return this;
     }
 
     public LoginPO clickSubmitOtp() {
-        waitFor(getClickableCondition(submitOtp));
+        this.submitOtp.waitFor().clickable();
         this.submitOtp.click();
         return this;
     }
 
     public boolean isOtpIncorrect() {
-        try {
-            waitFor(getVisibilityCondition(incorrectOtp), 5);
-            return true;
-        } catch (Exception ignored) {
-            return false;
-        }
+        return incorrectOtp.waitFor().visibility();
     }
 }

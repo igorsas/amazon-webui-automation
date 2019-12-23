@@ -6,9 +6,6 @@ import com.epam.element.Button;
 import com.epam.po.CartPO;
 import com.epam.po.SpecialOffersPO;
 
-import static com.epam.waiter.WaitElement.getClickableCondition;
-import static com.epam.waiter.WaitElement.waitFor;
-
 //TODO: create pages for each field and change methods return type
 public class HeaderWidget extends AbstractPO {
     @InitializeByXpath(locator = "//*[@id='nav-global-location-slot']//a")
@@ -29,39 +26,48 @@ public class HeaderWidget extends AbstractPO {
     @InitializeByXpath(locator = "//*[@id='nav-cart']")
     private Button cart;
 
+    @InitializeByXpath(locator = "//*[@id='nav-hamburger-menu']")
+    private Button categories;
+
     public HeaderWidget clickDeliverTo() {
-        waitFor(getClickableCondition(deliverTo));
+        this.deliverTo.waitFor().clickable();
         this.deliverTo.click();
         return this;
     }
 
     public SpecialOffersPO clickTodaysDeals() {
-        waitFor(getClickableCondition(todaysDeals));
+        this.todaysDeals.waitFor().clickable();
         this.todaysDeals.click();
         return new SpecialOffersPO();
     }
 
     public HeaderWidget clickHelp() {
-        waitFor(getClickableCondition(help));
+        this.help.waitFor().clickable();
         this.help.click();
         return this;
     }
 
     public HeaderWidget clickBuyAgain() {
-        waitFor(getClickableCondition(buyAgain));
+        this.buyAgain.waitFor().clickable();
         this.buyAgain.click();
         return this;
     }
 
     public HeaderWidget clickOrders() {
-        waitFor(getClickableCondition(orders));
+        this.orders.waitFor().clickable();
         this.orders.click();
         return this;
     }
 
     public CartPO clickCart() {
-        waitFor(getClickableCondition(cart));
+        this.cart.waitFor().clickable();
         this.cart.click();
         return new CartPO();
+    }
+
+    public ShopByCategoryWidget clickCategories(){
+        this.categories.waitFor().clickable();
+        this.categories.click();
+        return new ShopByCategoryWidget();
     }
 }

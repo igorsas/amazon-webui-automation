@@ -35,6 +35,9 @@ public class OpenPageTest extends AbstractTest {
 
     @Test
     public static void openCellPhonesPage(){
-
+        HeaderWidget headerWidget = new HeaderWidget();
+        headerWidget.clickCategories()
+                .openMenuByName("Electronics")
+                .openMenuByName("Cell Phones & Accessories");
     }
 }

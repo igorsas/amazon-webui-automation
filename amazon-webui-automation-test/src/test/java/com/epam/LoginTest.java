@@ -6,8 +6,7 @@ import com.epam.utils.GmailUtil;
 import org.testng.annotations.Test;
 
 import static com.epam.utils.DriverUtil.getTitle;
-import static com.epam.waiter.WaitElement.getPageLoadedCondition;
-import static com.epam.waiter.WaitElement.waitFor;
+import static com.epam.waiter.WaitElement.pageLoaded;
 
 
 public class LoginTest extends AbstractTest {
@@ -30,7 +29,7 @@ public class LoginTest extends AbstractTest {
                         .clickSubmitOtp();
             } while (loginPO.isOtpIncorrect());
         }
-        waitFor(getPageLoadedCondition());
+        pageLoaded(20);
         HomePageAssertion.assertHomePageOpened();
     }
 }
