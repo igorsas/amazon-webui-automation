@@ -40,4 +40,12 @@ public class OpenPageTest extends AbstractTest {
                 .openMenuByName("Electronics")
                 .openMenuByName("Cell Phones & Accessories");
     }
+
+    @Test
+    public static void openNotExistingPage(){
+        HeaderWidget headerWidget = new HeaderWidget();
+        headerWidget.clickCategories()
+                .openMenuByName("Anime")
+                .openMenuByName("For cool guys");
+    }
 }
