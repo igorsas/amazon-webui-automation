@@ -1,5 +1,5 @@
 # amazon-webui-automation
 
-For running with selenium grid: 
-docker-compose up -d
-set 'hub' property true
+<p>For running with selenium grid:</p>
+<p><code>docker-compose up -d</code></p>
+<p>set 'hub' property true</p>

@@ -19,11 +19,11 @@ public abstract class AbstractTest {
     public void setStartedPage() {
         DriverManager.getDriver().navigate().to(PropertyLoader.getValue(DRIVER_PROPERTIES_NAME, "initial_url"));
     }
-
-    @AfterMethod
-    public void clearDriver() {
-        DriverManager.clear();
-    }
+//doesn't work in selenium grid
+//    @AfterMethod
+//    public void clearDriver() {
+//        DriverManager.clear();
+//    }
 
     @AfterClass
     public void quitDriver() {
