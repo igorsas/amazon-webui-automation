@@ -5,7 +5,7 @@ import com.epam.annotation.InitializeByXpath;
 import com.epam.element.Button;
 import com.epam.element.Label;
 
-public class GoodPO extends AbstractPO {
+public class ProductPO extends AbstractPO {
     @InitializeByXpath(locator = "//*[@id='add-to-cart-button']")
     private Button addToCart;
 
@@ -18,7 +18,7 @@ public class GoodPO extends AbstractPO {
     @InitializeByXpath(locator = "//*[@id='productTitle']")
     private Label productTitle;
 
-    public GoodPO addToCart() {
+    public ProductPO addToCart() {
         if(this.switchToRegularPrice.waitFor().clickable()){
             switchToRegularPrice.click();
         }
@@ -32,7 +32,7 @@ public class GoodPO extends AbstractPO {
         return this.productTitle.getText();
     }
 
-    public GoodPO buyNow() {
+    public ProductPO buyNow() {
         this.buyNow.waitFor().clickable();
         this.buyNow.click();
         return this;
