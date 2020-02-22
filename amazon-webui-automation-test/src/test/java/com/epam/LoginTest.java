@@ -5,7 +5,6 @@ import com.epam.po.LoginPO;
 import com.epam.utils.GmailUtil;
 import org.testng.annotations.Test;
 
-import static com.epam.utils.DriverUtil.getTitle;
 import static com.epam.waiter.WaitElement.pageLoaded;
 import static org.testng.Assert.assertEquals;
 
@@ -28,7 +27,7 @@ public class LoginTest extends AbstractTest {
                 .setPassword(password)
                 .clickSelectKeepMeSignIn()
                 .clickSignIn();
-        if (getTitle().equals("Authentication required")) {
+        if (DriverManager.getDriver().getTitle().equals("Authentication required")) {
             loginPO.clickContinue();
             do {
                 String otp = GmailUtil.getAmazonOTP(username, password);
