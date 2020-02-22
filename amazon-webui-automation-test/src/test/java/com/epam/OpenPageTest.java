@@ -7,18 +7,19 @@ import com.epam.widget.HeaderWidget;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.epam.assertion.CartAssertion.assertCartIsEmpty;
+import static com.epam.constant.GeneralConstants.CART_IS_EMPTY;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class OpenPageTest extends AbstractTest {
     @Test
-    public static void openCartTest() {
+    public void openCartTest() {
         String actualHeader = new HeaderWidget().clickCart().getHeader();
         assertCartIsEmpty(actualHeader);
     }
 
     @Test
-    public static void addGoodToCartTest() {
+    public void addGoodToCartTest() {
         HeaderWidget headerWidget = new HeaderWidget();
         ProductPO productPO = headerWidget.clickTodaysDeals().openFirstGood();
         String expectedGoodTitle = productPO.getProductTitle();
@@ -28,7 +29,7 @@ public class OpenPageTest extends AbstractTest {
     }
 
     @Test
-    public static void openCellPhonesPage() {
+    public void openCellPhonesPage() {
         HeaderWidget headerWidget = new HeaderWidget();
         headerWidget.clickCategories()
                 .openMenuByName("Electronics")
@@ -36,7 +37,7 @@ public class OpenPageTest extends AbstractTest {
     }
 
     @Test
-    public static void openNotExistingPage() {
+    public void openNotExistingPage() {
         HeaderWidget headerWidget = new HeaderWidget();
         headerWidget.clickCategories()
                 .openMenuByName("Anime")
@@ -47,5 +48,9 @@ public class OpenPageTest extends AbstractTest {
     @Override
     public void setStartedPage() {
         DriverManager.getDriver().navigate().to("https://www.amazon.com/");
+    }
+
+    public static void assertCartIsEmpty(String header){
+        assertEquals(CART_IS_EMPTY, header, String.format("Cart is not empty. Expected header %s1 But found %s2", CART_IS_EMPTY, header));
     }
 }

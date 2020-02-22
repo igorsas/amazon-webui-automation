@@ -1,18 +1,25 @@
 package com.epam;
 
-import com.epam.assertion.HomePageAssertion;
+import com.epam.driver.DriverManager;
 import com.epam.po.LoginPO;
 import com.epam.utils.GmailUtil;
 import org.testng.annotations.Test;
 
 import static com.epam.utils.DriverUtil.getTitle;
 import static com.epam.waiter.WaitElement.pageLoaded;
+import static org.testng.Assert.assertEquals;
 
 
 public class LoginTest extends AbstractTest {
 
+    public static void assertHomePageOpened() {
+        String homePageTitle = "Your Amazon.com";
+        String currentPageTitle = DriverManager.getDriver().getTitle();
+        assertEquals(homePageTitle, currentPageTitle, String.format("Home page was not opened. Expected title %s1 But found %s2", homePageTitle, currentPageTitle));
+    }
+
     @Test
-    public static void loginPositiveTest() {
+    public void loginPositiveTest() {
         String username = "groot.epam@gmail.com";
         String password = "iamgroot";
         LoginPO loginPO = new LoginPO();
@@ -30,6 +37,6 @@ public class LoginTest extends AbstractTest {
             } while (loginPO.isOtpIncorrect());
         }
         pageLoaded(20);
-        HomePageAssertion.assertHomePageOpened();
+        assertHomePageOpened();
     }
 }
