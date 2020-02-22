@@ -60,6 +60,7 @@ public class HeaderWidget extends AbstractPO {
     }
 
     public CartPO clickCart() {
+        this.webDriver.navigate().refresh();
         this.cart.waitFor().clickable();
         this.cart.click();
         return new CartPO();

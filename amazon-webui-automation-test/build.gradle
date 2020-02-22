@@ -25,6 +25,8 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.3'
     // https://mvnrepository.com/artifact/org.apache.ibatis/ibatis-core
     compile group: 'org.apache.ibatis', name: 'ibatis-core', version: '3.0'
+    // https://mvnrepository.com/artifact/com.google.inject/guice
+    compile group: 'com.google.inject', name: 'guice', version: '4.0'
 }
 
 test {

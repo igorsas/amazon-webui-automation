@@ -34,7 +34,7 @@ public class DriverManager {
     }
 
     private static void initializeDriver() {
-        AtomicReference<WebDriver> driver = null;
+        AtomicReference<WebDriver> driver = new AtomicReference<>();
         if (Boolean.parseBoolean(getValue(DRIVER_PROPERTIES_NAME, HUB_STR))) {
             getRemoteDriver().ifPresent(driver::set);
         } else {

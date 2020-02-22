@@ -3,6 +3,9 @@ package com.epam;
 import com.epam.driver.DriverManager;
 import com.epam.po.LoginPO;
 import com.epam.utils.GmailUtil;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static com.epam.waiter.WaitElement.pageLoaded;
@@ -10,8 +13,10 @@ import static org.testng.Assert.assertEquals;
 
 
 public class LoginTest extends AbstractTest {
+    @Inject
+    private LoginPO loginPO;
 
-    public static void assertHomePageOpened() {
+    private static void assertHomePageOpened() {
         String homePageTitle = "Your Amazon.com";
         String currentPageTitle = DriverManager.getDriver().getTitle();
         assertEquals(homePageTitle, currentPageTitle, String.format("Home page was not opened. Expected title %s1 But found %s2", homePageTitle, currentPageTitle));
@@ -21,7 +26,6 @@ public class LoginTest extends AbstractTest {
     public void loginPositiveTest() {
         String username = "groot.epam@gmail.com";
         String password = "iamgroot";
-        LoginPO loginPO = new LoginPO();
         loginPO.setEmail(username)
                 .clickContinue()
                 .setPassword(password)
@@ -38,4 +42,10 @@ public class LoginTest extends AbstractTest {
         pageLoaded(20);
         assertHomePageOpened();
     }
+
+    @BeforeMethod
+    public void setStartedPage() {
+        Guice.createInjector().injectMembers(this);
+    }
+
 }
