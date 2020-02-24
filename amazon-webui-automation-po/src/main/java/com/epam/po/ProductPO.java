@@ -19,7 +19,7 @@ public class ProductPO extends AbstractPO {
     private Label productTitle;
 
     public ProductPO addToCart() {
-        if(this.switchToRegularPrice.waitFor().clickable()){
+        if(this.switchToRegularPrice.waitFor().quietly().clickable()){
             switchToRegularPrice.click();
         }
         this.addToCart.waitFor().clickable();

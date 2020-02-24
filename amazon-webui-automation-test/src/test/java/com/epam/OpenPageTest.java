@@ -51,8 +51,12 @@ public class OpenPageTest extends AbstractTest {
     }
 
     @BeforeMethod
-    public void setStartedPage() {
+    public void initializeFields() {
         Guice.createInjector().injectMembers(this);
+    }
+
+    @BeforeMethod
+    public void setStartedPage() {
         DriverManager.getDriver().navigate().to("https://www.amazon.com/");
     }
 }

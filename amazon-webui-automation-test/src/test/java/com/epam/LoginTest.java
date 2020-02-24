@@ -44,7 +44,7 @@ public class LoginTest extends AbstractTest {
     }
 
     @BeforeMethod
-    public void setStartedPage() {
+    public void initializeFields() {
         Guice.createInjector().injectMembers(this);
     }
 

@@ -17,7 +17,7 @@ public class ShopByCategoryWidget extends AbstractPO {
 
         if (!menuElement.isEmpty()) {
             Button menu = new Button(webDriver.findElement(xpath));
-            if (menu.waitFor().clickable())
+            if (menu.waitFor().quietly().clickable())
                 menu.click();
         }
         return this;
