@@ -33,7 +33,7 @@ public class OpenPageTest extends AbstractTest {
         String expectedProductTitle = productPO.getProductTitle();
         productPO.addToCart();
         CartPO cartPO = headerWidget.clickCart();
-        assertTrue(cartPO.hasGood(expectedProductTitle), "Product: " + expectedProductTitle + " is not added to cart");
+        assertTrue(cartPO.hasProduct(expectedProductTitle), "Product: " + expectedProductTitle + " is not added to cart");
     }
 
     @Test
