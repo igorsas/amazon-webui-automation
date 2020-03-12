@@ -3,6 +3,7 @@ package com.epam;
 import com.epam.driver.DriverManager;
 import com.epam.po.CartPO;
 import com.epam.po.ProductPO;
+import com.epam.utils.PropertyLoader;
 import com.epam.utils.Url;
 import com.epam.widget.HeaderWidget;
 import com.google.inject.Guice;
@@ -10,7 +11,7 @@ import com.google.inject.Inject;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.epam.constant.GeneralConstants.CART_IS_EMPTY;
+import static com.epam.constant.GeneralConstants.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -42,16 +43,21 @@ public class OpenPageTest extends AbstractTest {
 
     @Test
     public void openCellPhonesPage() {
+        String electronicsCategory = PropertyLoader.getValue(CATEGORIES_PROPERTIES_NAME, ELECTRONICS_CATEGORY_STR);
+        String cellPhonesCategory = PropertyLoader.getValue(CATEGORIES_PROPERTIES_NAME, CELL_PHONES_CATEGORY_STR);
+
         headerWidget.clickCategories()
-                .openMenuByName("Electronics")
-                .openMenuByName("Cell Phones & Accessories");
+                .openMenuByName(electronicsCategory)
+                .openMenuByName(cellPhonesCategory);
     }
 
     @Test
     public void openNotExistingPage() {
+        String incorrectCategory = PropertyLoader.getValue(CATEGORIES_PROPERTIES_NAME, INCORRECT_CATEGORY_STR);
+
         headerWidget.clickCategories()
-                .openMenuByName("Anime")
-                .openMenuByName("For cool guys");
+                .openMenuByName(incorrectCategory)
+                .openMenuByName(incorrectCategory);
     }
 
     @BeforeMethod
