@@ -3,6 +3,7 @@ package com.epam;
 import com.epam.driver.DriverManager;
 import com.epam.po.CartPO;
 import com.epam.po.ProductPO;
+import com.epam.utils.Url;
 import com.epam.widget.HeaderWidget;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -16,6 +17,9 @@ import static org.testng.Assert.assertTrue;
 public class OpenPageTest extends AbstractTest {
     @Inject
     private HeaderWidget headerWidget;
+
+    @Inject
+    private Url url;
 
     private static void assertCartIsEmpty(String header) {
         assertEquals(CART_IS_EMPTY, header, String.format("Cart is not empty. Expected header %s1 But found %s2", CART_IS_EMPTY, header));
@@ -57,6 +61,6 @@ public class OpenPageTest extends AbstractTest {
 
     @BeforeMethod
     public void setStartedPage() {
-        DriverManager.getDriver().navigate().to("https://www.amazon.com/");
+        DriverManager.getDriver().navigate().to(url.getUrl());
     }
 }
