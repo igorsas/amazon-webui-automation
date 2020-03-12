@@ -1,6 +1,7 @@
 package com.epam.factory;
 
 import com.epam.annotation.InitializeByXpath;
+import com.epam.annotation.InitializeDynamicByXpath;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
@@ -24,13 +25,20 @@ public class CustomElementLocator {
 
     private static By getByForField(Field field) {
         InitializeByXpath annotation = field.getAnnotation(InitializeByXpath.class);
-        if (Objects.isNull(annotation)) {
-            return null;
-        }
-        String xpath = annotation.locator();
-        By ans = By.xpath(xpath);
+        InitializeDynamicByXpath dynamicXpathAnnotation = field.getAnnotation(InitializeDynamicByXpath.class);
+        String xpath;
 
-        return ans;
+        if (Objects.isNull(annotation)) {
+            if(Objects.isNull(dynamicXpathAnnotation)) {
+                return null;
+            } else {
+                xpath = dynamicXpathAnnotation.locator();
+            }
+        }else {
+            xpath = annotation.locator();
+        }
+
+        return By.xpath(xpath);
     }
 
     public WebElement findElement() {

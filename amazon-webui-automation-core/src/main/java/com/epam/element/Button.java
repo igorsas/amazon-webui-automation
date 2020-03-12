@@ -8,6 +8,7 @@ public class Button extends Element {
     }
 
     public void click() {
+        this.waitFor().clickable();
         webElement.click();
     }
 }

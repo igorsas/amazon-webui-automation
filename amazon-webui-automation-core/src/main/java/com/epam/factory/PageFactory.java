@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 public class PageFactory {
     public static void initElements(WebDriver driver, Object page) {
@@ -19,7 +20,7 @@ public class PageFactory {
         Field[] fields = proxyIn.getDeclaredFields();
         for (Field field : fields) {
             Object value = decorator.decorate(page.getClass().getClassLoader(), field);
-            if (value != null) {
+            if (Objects.nonNull(value)) {
                 try {
                     field.setAccessible(true);
                     field.set(page, value);

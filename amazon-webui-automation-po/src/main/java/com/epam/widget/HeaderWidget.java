@@ -30,44 +30,37 @@ public class HeaderWidget extends AbstractPO {
     private Button categories;
 
     public HeaderWidget clickDeliverTo() {
-        this.deliverTo.waitFor().clickable();
         this.deliverTo.click();
         return this;
     }
 
     public SpecialOffersPO clickTodaysDeals() {
-        this.todaysDeals.waitFor().clickable();
         this.todaysDeals.click();
         return new SpecialOffersPO();
     }
 
     public HeaderWidget clickHelp() {
-        this.help.waitFor().clickable();
         this.help.click();
         return this;
     }
 
     public HeaderWidget clickBuyAgain() {
-        this.buyAgain.waitFor().clickable();
         this.buyAgain.click();
         return this;
     }
 
     public HeaderWidget clickOrders() {
-        this.orders.waitFor().clickable();
         this.orders.click();
         return this;
     }
 
     public CartPO clickCart() {
         this.webDriver.navigate().refresh();
-        this.cart.waitFor().clickable();
         this.cart.click();
         return new CartPO();
     }
 
     public ShopByCategoryWidget clickCategories(){
-        this.categories.waitFor().clickable();
         this.categories.click();
         return new ShopByCategoryWidget();
     }

@@ -9,7 +9,6 @@ public class SpecialOffersPO extends AbstractPO {
     private Button firstProduct;
 
     public ProductPO openFirstGood(){
-        this.firstProduct.waitFor().clickable();
         this.firstProduct.click();
         return new ProductPO();
     }

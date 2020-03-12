@@ -7,6 +7,7 @@ public class CheckBox extends Element {
 
     public void selectCheckBox(){
         if(!webElement.isSelected()){
+            this.waitFor().clickable();
             webElement.click();
         }
     }
