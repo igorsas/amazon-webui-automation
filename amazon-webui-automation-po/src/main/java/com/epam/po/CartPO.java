@@ -19,7 +19,7 @@ public class CartPO extends AbstractPO {
     }
 
     public boolean hasProduct(String expectedProductTitle) {
-        DynamicElement dynamicElement = new DynamicElement("//*[contains(text(),'%s')]", expectedProductTitle);
-        return dynamicElement.waitFor().quietly().visibility();
+        DynamicElement.resolve(this, expectedProductTitle);
+        return product.waitFor().quietly().visibility();
     }
 }
