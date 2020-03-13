@@ -14,4 +14,8 @@ public final class CustomElementLocatorFactory {
     public CustomElementLocator createLocator(Field field) {
         return new CustomElementLocator(searchContext, field);
     }
+
+    public CustomElementLocator createLocator(Field field, String xpathLocator) {
+        return new CustomElementLocator(searchContext, field, xpathLocator);
+    }
 }
