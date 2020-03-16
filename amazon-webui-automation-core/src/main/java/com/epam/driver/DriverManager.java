@@ -1,8 +1,7 @@
 package com.epam.driver;
 
+import com.epam.utils.Url;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -19,42 +18,38 @@ import static com.epam.utils.PropertyLoader.getValue;
 public class DriverManager {
     private static ThreadLocal<WebDriver> DRIVER_POOL = new ThreadLocal<>();
 
-    static {
-        System.setProperty(getValue(DRIVER_PROPERTIES_NAME, DRIVER_NAME_STR), getValue(DRIVER_PROPERTIES_NAME, PATH_STR));
-    }
-
     private DriverManager() {
     }
 
     public static WebDriver getDriver() {
+        return getDriver(DriverManagerFactory.CHROME);
+    }
+
+    public static WebDriver getDriver(DriverManagerFactory factory) {
         if (Objects.isNull(DRIVER_POOL.get())) {
-            initializeDriver();
+            initializeDriver(factory);
         }
         return DRIVER_POOL.get();
     }
 
-    private static void initializeDriver() {
+    private static void initializeDriver(DriverManagerFactory factory) {
         AtomicReference<WebDriver> driver = new AtomicReference<>();
         if (Boolean.parseBoolean(getValue(DRIVER_PROPERTIES_NAME, HUB_STR))) {
             getRemoteDriver().ifPresent(driver::set);
         } else {
-            driver.set(getStandardDriver());
+            driver.set(factory.create());
         }
         setTimeouts(driver.get());
         DRIVER_POOL.set(driver.get());
     }
 
-    private static WebDriver getStandardDriver() {
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(Boolean.parseBoolean(getValue(DRIVER_PROPERTIES_NAME, HEADLESS_MODE_STR)));
-        options.addArguments(DISABLE_INFOBARS_STR);
-        return new ChromeDriver(options);
-    }
-
     private static Optional<WebDriver> getRemoteDriver() {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         try {
-            return Optional.of(new RemoteWebDriver(new URL("http://192.168.99.100:4444/wd/hub"), capabilities));
+            Url hubUrl = new Url();
+            hubUrl.setDns(HUB_DNS_STR);
+            hubUrl.setUrn(HUB_URN_STR);
+            return Optional.of(new RemoteWebDriver(new URL(hubUrl.getUrl()), capabilities));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

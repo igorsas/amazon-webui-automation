@@ -1,6 +1,7 @@
 package com.epam;
 
 import com.epam.driver.DriverManager;
+import com.epam.driver.DriverManagerFactory;
 import com.epam.po.LoginPO;
 import com.epam.utils.GmailUtil;
 import com.epam.utils.PropertyLoader;
@@ -54,6 +55,7 @@ public class LoginTest extends AbstractTest {
 
     @BeforeMethod
     public void initializeFields() {
+        DriverManager.getDriver(DriverManagerFactory.OPERA);
         Guice.createInjector().injectMembers(this);
     }
 

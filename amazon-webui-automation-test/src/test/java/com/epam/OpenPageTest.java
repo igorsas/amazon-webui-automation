@@ -1,6 +1,7 @@
 package com.epam;
 
 import com.epam.driver.DriverManager;
+import com.epam.driver.DriverManagerFactory;
 import com.epam.po.CartPO;
 import com.epam.po.ProductPO;
 import com.epam.utils.PropertyLoader;
@@ -62,6 +63,7 @@ public class OpenPageTest extends AbstractTest {
 
     @BeforeMethod
     public void initializeFields() {
+        DriverManager.getDriver(DriverManagerFactory.FIREFOX);
         Guice.createInjector().injectMembers(this);
     }
 

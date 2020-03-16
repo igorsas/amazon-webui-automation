@@ -11,19 +11,16 @@ public final class GeneralConstants {
     public static final String CATEGORIES_PROPERTIES_NAME = "categories.properties";
     public static final String LOGIN_PROPERTIES_NAME = "login.properties";
 
-    public static final String DRIVER_NAME_STR = "driver_name";
-    public static final String PATH_STR = "path";
     public static final String HUB_STR = "hub";
-    public static final String HEADLESS_MODE_STR = "headless_mode";
 
     public static final String IMPLICITRY_WAIT_STR = "implicitlyWait";
     public static final String PAGE_LOAD_TIMEOUT_STR = "pageLoadTimeout";
     public static final String SCRIPT_TIMEOUT_STR = "scriptTimeout";
 
-    public static final String DISABLE_INFOBARS_STR = "disable-infobars";
-
     public static final String DEFAULT_DNS_STR = "default_dns";
     public static final String LOGIN_URN_STR = "login_urn";
+    public static final String HUB_DNS_STR = "hub_dns";
+    public static final String HUB_URN_STR = "hub_urn";
 
     public static final String ELECTRONICS_CATEGORY_STR = "electronics";
     public static final String CELL_PHONES_CATEGORY_STR = "cell_phones";
