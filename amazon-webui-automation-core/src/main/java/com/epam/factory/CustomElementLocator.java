@@ -6,7 +6,6 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 
 import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Objects;
 
 public class CustomElementLocator {
@@ -15,6 +14,10 @@ public class CustomElementLocator {
 
     public CustomElementLocator(SearchContext searchContext, Field field) {
         this(searchContext, getByForField(field));
+    }
+
+    public CustomElementLocator(SearchContext searchContext, Field field, String xpathLocator) {
+        this(searchContext, getByForField(field, xpathLocator));
     }
 
     public CustomElementLocator(SearchContext searchContext, By by) {
@@ -28,9 +31,11 @@ public class CustomElementLocator {
             return null;
         }
         String xpath = annotation.locator();
-        By ans = By.xpath(xpath);
+        return getByForField(field, xpath);
+    }
 
-        return ans;
+    private static By getByForField(Field field, String xpathLocator) {
+        return By.xpath(xpathLocator);
     }
 
     public WebElement findElement() {

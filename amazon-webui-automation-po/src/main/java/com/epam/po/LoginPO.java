@@ -43,7 +43,6 @@ public class LoginPO extends AbstractPO {
     }
 
     public LoginPO clickContinue() {
-        this.continuE.waitFor().clickable();
         this.continuE.click();
         return this;
     }
@@ -55,13 +54,11 @@ public class LoginPO extends AbstractPO {
     }
 
     public LoginPO clickSignIn() {
-        this.signIn.waitFor().clickable();
         this.signIn.click();
         return this;
     }
 
     public LoginPO clickSubmitOtp() {
-        this.submitOtp.waitFor().clickable();
         this.submitOtp.click();
         return this;
     }

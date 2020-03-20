@@ -1,83 +1,74 @@
 package com.epam.driver;
 
-import com.epam.utils.PropertyLoader;
-import org.openqa.selenium.JavascriptExecutor;
+import com.epam.utils.Url;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
-import static com.epam.constant.GeneralConstants.DRIVER_PROPERTIES_NAME;
-import static com.epam.constant.GeneralConstants.WAIT_TIMERS_PROPERTIES_NAME;
+import static com.epam.constant.GeneralConstants.*;
+import static com.epam.utils.PropertyLoader.getValue;
 
 public class DriverManager {
-    private static final String NAME = Objects.requireNonNull(PropertyLoader.getValue(DRIVER_PROPERTIES_NAME, "name"));
-    private static final String PATH = Objects.requireNonNull(PropertyLoader.getValue(DRIVER_PROPERTIES_NAME, "path"));
-    private static final boolean HEADLESS_MODE = Boolean.parseBoolean(PropertyLoader.getValue(DRIVER_PROPERTIES_NAME, "headless"));
-    private static final boolean RUN_ON_HUB = Boolean.parseBoolean(PropertyLoader.getValue(DRIVER_PROPERTIES_NAME, "hub"));
     private static ThreadLocal<WebDriver> DRIVER_POOL = new ThreadLocal<>();
-
-    static {
-        System.setProperty(NAME, PATH);
-    }
 
     private DriverManager() {
     }
 
     public static WebDriver getDriver() {
+        return getDriver(DriverManagerFactory.CHROME);
+    }
+
+    public static WebDriver getDriver(DriverManagerFactory factory) {
         if (Objects.isNull(DRIVER_POOL.get())) {
-            initializeDriver();
+            initializeDriver(factory);
         }
         return DRIVER_POOL.get();
     }
 
-    private static void initializeDriver() {
-
-        WebDriver driver = null;
-        if (RUN_ON_HUB) {
-            DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-            try {
-                driver = new RemoteWebDriver(new URL("http://192.168.99.100:4444/wd/hub"), capabilities);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+    private static void initializeDriver(DriverManagerFactory factory) {
+        AtomicReference<WebDriver> driver = new AtomicReference<>();
+        if (Boolean.parseBoolean(getValue(DRIVER_PROPERTIES_NAME, HUB_STR))) {
+            getRemoteDriver().ifPresent(driver::set);
         } else {
-            ChromeOptions options = new ChromeOptions();
-            options.setHeadless(HEADLESS_MODE);
-            options.addArguments("disable-infobars");
-//        uncomment when need addblock
-//        options.addExtensions(new File("src/main/resources/adBlockExtension.crx"));
-            driver = new ChromeDriver(options);
+            driver.set(factory.create());
         }
-        long implicitlyWait = Long.parseLong(Objects.requireNonNull(PropertyLoader.getValue(WAIT_TIMERS_PROPERTIES_NAME, "implicitlyWait")));
-        long pageLoadTimeout = Long.parseLong(Objects.requireNonNull(PropertyLoader.getValue(WAIT_TIMERS_PROPERTIES_NAME, "pageLoadTimeout")));
-        long scriptTimeout = Long.parseLong(Objects.requireNonNull(PropertyLoader.getValue(WAIT_TIMERS_PROPERTIES_NAME, "scriptTimeout")));
+        setTimeouts(driver.get());
+        DRIVER_POOL.set(driver.get());
+    }
 
-        DRIVER_POOL.set(driver);
-        DRIVER_POOL.get().manage().timeouts().implicitlyWait(implicitlyWait, TimeUnit.SECONDS);
-        DRIVER_POOL.get().manage().timeouts().pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS);
-        DRIVER_POOL.get().manage().timeouts().setScriptTimeout(scriptTimeout, TimeUnit.SECONDS);
-        DRIVER_POOL.get().manage().window().maximize();
+    private static Optional<WebDriver> getRemoteDriver() {
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        try {
+            Url hubUrl = new Url();
+            hubUrl.setDns(HUB_DNS_STR);
+            hubUrl.setUrn(HUB_URN_STR);
+            return Optional.of(new RemoteWebDriver(new URL(hubUrl.getUrl()), capabilities));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    private static void setTimeouts(WebDriver driver) {
+        long implicitlyWait = Long.parseLong(getValue(WAIT_TIMERS_PROPERTIES_NAME, IMPLICITRY_WAIT_STR));
+        long pageLoadTimeout = Long.parseLong(getValue(WAIT_TIMERS_PROPERTIES_NAME, PAGE_LOAD_TIMEOUT_STR));
+        long scriptTimeout = Long.parseLong(getValue(WAIT_TIMERS_PROPERTIES_NAME, SCRIPT_TIMEOUT_STR));
+
+        driver.manage().timeouts().implicitlyWait(implicitlyWait, TimeUnit.SECONDS)
+                .pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS)
+                .setScriptTimeout(scriptTimeout, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
     }
 
     public static void quit() {
         DRIVER_POOL.get().quit();
         DRIVER_POOL.set(null);
-    }
-
-    public static void clear() {
-        JavascriptExecutor jsExecutor = (JavascriptExecutor) DRIVER_POOL.get();
-        Long hostnameLength = (Long) jsExecutor.executeScript("return window.location.hostname.length;");
-        if (hostnameLength > 0) {
-            jsExecutor.executeScript("window.sessionStorage.clear();");
-            jsExecutor.executeScript("window.localStorage.clear();");
-        }
-        DRIVER_POOL.get().manage().deleteAllCookies();
     }
 }

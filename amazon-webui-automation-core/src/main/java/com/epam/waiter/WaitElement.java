@@ -13,9 +13,9 @@ public class WaitElement {
     private WebElement element;
     private final int DEFAULT_TIME_OUT = 30;
     private WebDriverWait webDriverWait;
+    private boolean quietly;
 
     public WaitElement(WebElement webElement) { this.element = webElement; }
-
 
     public boolean clickable() {
         webDriverWait = new WebDriverWait(DriverManager.getDriver(), DEFAULT_TIME_OUT);
@@ -25,10 +25,9 @@ public class WaitElement {
                 return visibleElement != null && visibleElement.isEnabled() && visibleElement.isDisplayed() ? visibleElement : null;
             });
             return true;
-        } catch (WebDriverException ignored) {
-            return false;
+        } catch (WebDriverException e) {
+            return ifException(e);
         }
-
     }
 
     public boolean visibility() {
@@ -36,8 +35,21 @@ public class WaitElement {
         try {
             webDriverWait.until(driver -> ExpectedConditions.visibilityOf(element).apply(driver));
             return true;
-        } catch (WebDriverException ignored) {
+        } catch (WebDriverException e) {
+            return ifException(e);
+        }
+    }
+
+    public WaitElement quietly(){
+        quietly = true;
+        return this;
+    }
+
+    private boolean ifException(WebDriverException e) {
+        if(quietly){
             return false;
+        }else {
+            throw e;
         }
     }
 

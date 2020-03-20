@@ -1,6 +1,7 @@
 package com.epam.factory;
 
 import com.epam.element.AbstractElement;
+import com.epam.element.DynamicElement;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.internal.Locatable;
@@ -22,8 +23,18 @@ public class CustomFieldDecorator {
     public Object decorate(ClassLoader loader, Field field) {
         Class<AbstractElement> decoratableClass = decoratableClass(field);
         // if class of field is decorated
-        if (!Objects.isNull(decoratableClass)) {
+        if (!Objects.isNull(decoratableClass) && !DynamicElement.class.isAssignableFrom(field.getType())) {
             CustomElementLocator locator = factory.createLocator(field);
+            return createElement(loader, locator, decoratableClass);
+        }
+        return null;
+    }
+
+    public Object decorateDynamicField(ClassLoader loader, Field field, String xpathLocator) {
+        Class<AbstractElement> decoratableClass = decoratableClass(field);
+        // if class of field is decorated
+        if (!Objects.isNull(decoratableClass)) {
+            CustomElementLocator locator = factory.createLocator(field, xpathLocator);
             return createElement(loader, locator, decoratableClass);
         }
         return null;
